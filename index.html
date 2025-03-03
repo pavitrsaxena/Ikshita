@@ -63,11 +63,9 @@
             display: none;
         }
         .arrow-heart {
-            position: absolute;
             font-size: 40px;
             color: red;
             display: none;
-            transform: rotate(45deg);
             transition: all 0.5s ease-in-out;
         }
     </style>
@@ -86,9 +84,8 @@
             <p>Abhi bhee katti ho kya?</p>
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
-            <div id="arrowHeart" class="arrow-heart">💘</div>
         </div>
-        <p id="message">I'm waiting for you there. ❤️</p>
+        <p id="message">I'm waiting to maanao you aur aache se. ❤️</p>
     </div>
 
     <script>
@@ -114,27 +111,31 @@
             heart.className = "heart";
             heart.innerHTML = "❤️";
             heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (Math.random() * 3 + 2) + "s"; // More random speeds
-            heart.style.fontSize = Math.random() * 20 + 20 + "px"; // Different sizes
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            heart.style.fontSize = Math.random() * 20 + 20 + "px";
             document.querySelector(".hearts").appendChild(heart);
             setTimeout(() => heart.remove(), 5000);
         }
-        setInterval(createHeart, 150); // More hearts appear faster
+        setInterval(createHeart, 150);
 
         // Button Logic
-        let yesClicked = false;
         document.getElementById("yesBtn").addEventListener("click", function() {
-            if (!yesClicked) {
-                this.innerText = "No";
-                this.style.backgroundColor = "lightgreen";
-                yesClicked = true;
+            let yesBtn = document.getElementById("yesBtn");
+            let arrowHeart = document.createElement("span");
 
-                // Show arrow-heart pointing to "No" button
-                let arrowHeart = document.getElementById("arrowHeart");
-                arrowHeart.style.display = "block";
+            arrowHeart.className = "arrow-heart";
+            arrowHeart.innerHTML = "💘";
+            arrowHeart.style.position = "absolute";
+            arrowHeart.style.left = yesBtn.offsetLeft + "px";
+            arrowHeart.style.top = yesBtn.offsetTop + "px";
+            document.querySelector(".popup").appendChild(arrowHeart);
+
+            setTimeout(() => {
                 arrowHeart.style.left = document.getElementById("noBtn").offsetLeft + "px";
-                arrowHeart.style.top = document.getElementById("noBtn").offsetTop - 40 + "px";
-            }
+                arrowHeart.style.top = document.getElementById("noBtn").offsetTop - 10 + "px";
+            }, 100);
+
+            yesBtn.style.display = "none"; // Hide Yes button
         });
 
         document.getElementById("noBtn").addEventListener("click", function() {
