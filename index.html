@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ikshita</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png">
     <style>
         body {
             text-align: center;
@@ -75,11 +76,16 @@
     <script>
         function checkPassword() {
             const password = document.getElementById("passwordInput").value;
-            const correctPassword = "secret123";  // Change this to your desired password
+            const correctPassword = "secret123"; // Change this to your desired password
 
             if (password === correctPassword) {
                 document.getElementById("passwordPrompt").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
+                
+                // Pop-up appears after login
+                setTimeout(() => {
+                    document.querySelector(".popup").style.display = "block";
+                }, 500);
             } else {
                 alert("Wrong password!");
             }
