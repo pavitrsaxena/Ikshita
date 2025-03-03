@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ikshita</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            animation: floatUp 3s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+        .popup {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #yesBtn {
+            background-color: lightgray;
+        }
+        #noBtn {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="passwordPrompt">
+        <p>Enter Password:</p>
+        <input type="password" id="passwordInput">
+        <button onclick="checkPassword()">Submit</button>
+    </div>
+
+    <div id="mainContent" style="display: none;">
+        <div class="hearts"></div>
+        <div class="popup">
+            <p>Abhi bhee katti ho kya?</p>
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            const correctPassword = "secret123";  // Change this to your desired password
+
+            if (password === correctPassword) {
+                document.getElementById("passwordPrompt").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            } else {
+                alert("Wrong password!");
+            }
+        }
+
+        // Hearts Animation
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            document.querySelector(".hearts").appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+        setInterval(createHeart, 200);
+
+        // Button Logic
+        let yesClicked = false;
+        document.getElementById("yesBtn").addEventListener("click", function() {
+            if (!yesClicked) {
+                this.innerText = "No";
+                this.style.backgroundColor = "lightgreen";
+                yesClicked = true;
+            }
+        });
+
+        document.getElementById("noBtn").addEventListener("click", function() {
+            alert("Acha baccha! 🤗");
+        });
+    </script>
+
+</body>
+</html>
