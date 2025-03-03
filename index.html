@@ -39,7 +39,6 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-            display: none;
             position: relative;
         }
         button {
@@ -53,7 +52,7 @@
         }
         #yesBtn {
             background-color: lightgray;
-            position: absolute;
+            transition: 0.2s;
         }
         #noBtn {
             background-color: lightgreen;
@@ -75,40 +74,18 @@
 </head>
 <body>
 
-    <div id="passwordPrompt">
-        <p>Enter Password:</p>
-        <input type="password" id="passwordInput">
-        <button onclick="checkPassword()">Submit</button>
+    <div class="hearts"></div>
+
+    <div class="popup">
+        <p>Abhi bhee katti ho kya?</p>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
     </div>
 
-    <div id="mainContent" style="display: none;">
-        <div class="hearts"></div>
-        <div class="popup">
-            <p>Abhi bhee katti ho kya?</p>
-            <button id="yesBtn">Yes</button>
-            <button id="noBtn">No</button>
-        </div>
-        <p id="message">I'm waiting to maanao you aur aache se. ❤️</p>
-        <button id="comeHereBtn" onclick="redirectToWhatsApp()">Come Here</button>
-    </div>
+    <p id="message">I'm waiting to maanao you aur aache se. ❤️</p>
+    <button id="comeHereBtn" onclick="redirectToWhatsApp()">Come Here</button>
 
     <script>
-        function checkPassword() {
-            const password = document.getElementById("passwordInput").value;
-            const correctPassword = "secret123"; // Change this to your desired password
-
-            if (password === correctPassword) {
-                document.getElementById("passwordPrompt").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
-                
-                setTimeout(() => {
-                    document.querySelector(".popup").style.display = "block";
-                }, 500);
-            } else {
-                alert("Wrong password!");
-            }
-        }
-
         // Floating Hearts Animation
         function createHeart() {
             const heart = document.createElement("div");
@@ -131,6 +108,7 @@
             let newX = Math.random() * maxWidth;
             let newY = Math.random() * maxHeight;
 
+            yesBtn.style.position = "absolute";
             yesBtn.style.left = newX + "px";
             yesBtn.style.top = newY + "px";
         });
@@ -141,7 +119,7 @@
         });
 
         function redirectToWhatsApp() {
-            const phoneNumber = "917827856193"; // Change this to the recipient's WhatsApp number
+            const phoneNumber = "91XXXXXXXXXX"; // Change this to the recipient's WhatsApp number
             window.location.href = `https://wa.me/${phoneNumber}?text=Hey!%20I%20clicked%20'Come%20Here'%20😜`;
         }
     </script>
