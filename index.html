@@ -16,6 +16,7 @@
             align-items: center;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
         }
         .hearts {
             position: absolute;
@@ -26,8 +27,8 @@
         .heart {
             position: absolute;
             color: red;
-            font-size: 20px;
-            animation: floatUp 3s linear infinite;
+            font-size: 25px;
+            animation: floatUp 5s linear infinite;
         }
         @keyframes floatUp {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
@@ -39,6 +40,7 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
             display: none;
+            position: relative;
         }
         button {
             margin: 10px;
@@ -53,6 +55,20 @@
         }
         #noBtn {
             background-color: lightgreen;
+        }
+        #message {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            display: none;
+        }
+        .arrow-heart {
+            position: absolute;
+            font-size: 40px;
+            color: red;
+            display: none;
+            transform: rotate(45deg);
+            transition: all 0.5s ease-in-out;
         }
     </style>
 </head>
@@ -70,7 +86,9 @@
             <p>Abhi bhee katti ho kya?</p>
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
+            <div id="arrowHeart" class="arrow-heart">💘</div>
         </div>
+        <p id="message">I'm waiting for you there. ❤️</p>
     </div>
 
     <script>
@@ -82,7 +100,6 @@
                 document.getElementById("passwordPrompt").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
                 
-                // Pop-up appears after login
                 setTimeout(() => {
                     document.querySelector(".popup").style.display = "block";
                 }, 500);
@@ -91,17 +108,18 @@
             }
         }
 
-        // Hearts Animation
+        // Floating Hearts Animation (More Hearts!)
         function createHeart() {
             const heart = document.createElement("div");
             heart.className = "heart";
             heart.innerHTML = "❤️";
             heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s"; // More random speeds
+            heart.style.fontSize = Math.random() * 20 + 20 + "px"; // Different sizes
             document.querySelector(".hearts").appendChild(heart);
-            setTimeout(() => heart.remove(), 3000);
+            setTimeout(() => heart.remove(), 5000);
         }
-        setInterval(createHeart, 200);
+        setInterval(createHeart, 150); // More hearts appear faster
 
         // Button Logic
         let yesClicked = false;
@@ -110,11 +128,17 @@
                 this.innerText = "No";
                 this.style.backgroundColor = "lightgreen";
                 yesClicked = true;
+
+                // Show arrow-heart pointing to "No" button
+                let arrowHeart = document.getElementById("arrowHeart");
+                arrowHeart.style.display = "block";
+                arrowHeart.style.left = document.getElementById("noBtn").offsetLeft + "px";
+                arrowHeart.style.top = document.getElementById("noBtn").offsetTop - 40 + "px";
             }
         });
 
         document.getElementById("noBtn").addEventListener("click", function() {
-            alert("Acha baccha! 🤗");
+            document.getElementById("message").style.display = "block"; // Show message
         });
     </script>
 
