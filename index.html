@@ -49,9 +49,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            position: relative;
         }
         #yesBtn {
             background-color: lightgray;
+            position: absolute;
         }
         #noBtn {
             background-color: lightgreen;
@@ -62,11 +64,12 @@
             color: white;
             display: none;
         }
-        .arrow-heart {
-            font-size: 40px;
-            color: red;
+        #comeHereBtn {
+            background-color: red;
+            color: white;
+            font-size: 18px;
+            margin-top: 10px;
             display: none;
-            transition: all 0.5s ease-in-out;
         }
     </style>
 </head>
@@ -86,6 +89,7 @@
             <button id="noBtn">No</button>
         </div>
         <p id="message">I'm waiting to maanao you aur aache se. ❤️</p>
+        <button id="comeHereBtn" onclick="redirectToWhatsApp()">Come Here</button>
     </div>
 
     <script>
@@ -105,7 +109,7 @@
             }
         }
 
-        // Floating Hearts Animation (More Hearts!)
+        // Floating Hearts Animation
         function createHeart() {
             const heart = document.createElement("div");
             heart.className = "heart";
@@ -118,29 +122,28 @@
         }
         setInterval(createHeart, 150);
 
-        // Button Logic
-        document.getElementById("yesBtn").addEventListener("click", function() {
+        // Moving "Yes" Button
+        document.getElementById("yesBtn").addEventListener("mouseover", function() {
             let yesBtn = document.getElementById("yesBtn");
-            let arrowHeart = document.createElement("span");
+            let maxWidth = window.innerWidth - 100; // Prevents going out of bounds
+            let maxHeight = window.innerHeight - 100;
+            
+            let newX = Math.random() * maxWidth;
+            let newY = Math.random() * maxHeight;
 
-            arrowHeart.className = "arrow-heart";
-            arrowHeart.innerHTML = "💘";
-            arrowHeart.style.position = "absolute";
-            arrowHeart.style.left = yesBtn.offsetLeft + "px";
-            arrowHeart.style.top = yesBtn.offsetTop + "px";
-            document.querySelector(".popup").appendChild(arrowHeart);
-
-            setTimeout(() => {
-                arrowHeart.style.left = document.getElementById("noBtn").offsetLeft + "px";
-                arrowHeart.style.top = document.getElementById("noBtn").offsetTop - 10 + "px";
-            }, 100);
-
-            yesBtn.style.display = "none"; // Hide Yes button
+            yesBtn.style.left = newX + "px";
+            yesBtn.style.top = newY + "px";
         });
 
         document.getElementById("noBtn").addEventListener("click", function() {
             document.getElementById("message").style.display = "block"; // Show message
+            document.getElementById("comeHereBtn").style.display = "block"; // Show "Come Here" button
         });
+
+        function redirectToWhatsApp() {
+            const phoneNumber = "917827856193"; // Change this to the recipient's WhatsApp number
+            window.location.href = `https://wa.me/${phoneNumber}?text=Hey!%20I%20clicked%20'Come%20Here'%20😜`;
+        }
     </script>
 
 </body>
